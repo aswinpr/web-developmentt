@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>string math</title>
+</head>
+<style>
+    .container{
+        justify-content: center;
+    }
+</style>
+<body bgcolor="yellow">
+    <div class="container">
+        <form id="userinput">
+            <b>ENTER A STRING : </b><input id="str" type="text"><br><br>
+            <b>ENTER A NUMBER :</b><input id="num" type="text"><br>
+            <input type="submit" value="submit">
+        </form>
+    </div>
+    <div class="container">
+        <h1>STRING FUNCTIONS</h1>
+        <h3 id="stringdisplay"></h3>
+        <br>
+        <h1>MATH FUNCTIONS</h1>
+        <h3 id="mathdisplay"></h3>
+    </div>
+
+    <script>
+
+        const form=document.getElementById("userinput");
+        form.addEventListener("submit",function(event){
+            event.preventDefault();
+
+            const str=document.getElementById("str").value;
+            const num=document.getElementById("num").value;
+
+            if(isNaN(num)){
+                document.getElementById("mathdisplay").innerHTML="invalid input !, please select a number";
+            }
+            else{
+                const rounded_value = Math.round(num);
+                const floor_value = Math.floor(num);
+                const ceil_value = Math.ceil(num)
+
+                document.getElementById("mathdisplay").innerHTML=`rounded value is ${rounded_value}
+                <br>
+                floor value is ${floor_value}
+                <br>
+                ceil value is ${ceil_value}`;
+            }
+
+            document.getElementById("stringdisplay").innerHTML=`string length is : ${str.length}<br>
+            upper cased : ${str.toUpperCase()}<br>
+            lower cased : ${str.toLowerCase()}<br>
+            character at index 1: ${str.charAt(1)}<br>
+            substring from 0 to 5 : ${str.substring(0,5)}<br>
+            string length : ${str.length}`;
+        })
+
+    </script>
+
+
+
+
+
+    
+</body>
+</html>
