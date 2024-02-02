@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Online Exam</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    #exam-container {
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .question {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      text-align: left;
+    }
+
+    .option {
+      background-color: #f0f0f0;
+      padding: 10px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .option:hover {
+      background-color: #e0e0e0;
+    }
+
+    #submit-btn {
+      margin-top: 20px;
+    }
+
+    #score {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<div id="exam-container">
+  <div class="question" id="question">Loading question...</div>
+  <div class="options" id="options"></div>
+  <button id="submit-btn" onclick="submitExam()">Submit Exam</button>
+  <div id="score"></div>
+</div>
+
+<script>
+  const examData = [
+    {
+      question: "What is the capital of France?",
+      options: ["Paris", "Berlin", "London", "Madrid"],
+      correctAnswer: "Paris"
+    },
+    {
+      question: "Which planet is known as the Red Planet?",
+      options: ["Venus", "Mars", "Jupiter", "Saturn"],
+      correctAnswer: "Mars"
+    },
+    {
+      question: "What is the largest mammal in the world?",
+      options: ["Elephant", "Blue Whale", "Giraffe", "Hippopotamus"],
+      correctAnswer: "Blue Whale"
+    }
+  ];
+
+  let currentQuestionIndex = 0;
+  let score = 0;
+  const questionElement = document.getElementById("question");
+  const optionsElement = document.getElementById("options");
+  const scoreElement = document.getElementById("score");
+
+  function loadQuestion() {
+    const currentQuestion = examData[currentQuestionIndex];
+    questionElement.textContent = currentQuestion.question;
+
+    const optionsHTML = currentQuestion.options.map((option, index) =>
+      `<div class="option" onclick="selectOption(this, '${option}')">${option}</div>`
+    ).join('');
+
+    optionsElement.innerHTML = optionsHTML;
+  }
+
+  function selectOption(optionElement, selectedOption) {
+    // Check the answer
+    if (selectedOption === examData[currentQuestionIndex].correctAnswer) {
+      score++; // Increment score for correct answer
+    }
+
+    // Move to the next question or finish exam
+    currentQuestionIndex++;
+    if (currentQuestionIndex < examData.length) {
+      loadQuestion();
+    } else {
+      finishExam();
+    }
+  }
+
+  function finishExam() {
+    // Hide question and options
+    questionElement.style.display = 'none';
+    optionsElement.style.display = 'none';
+    document.getElementById('submit-btn').style.display = 'none';
+
+    // Display score
+    scoreElement.textContent = `Your score is ${score} out of ${examData.length}.`;
+  }
+
+  // Initial load
+  loadQuestion();
+</script>
+
+</body>
+</html>
